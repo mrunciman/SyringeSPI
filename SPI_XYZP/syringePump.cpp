@@ -18,6 +18,7 @@ float SyringePump::readPressure()
   vRead = analogRead(pressurePin);
   vOut = vRead * ADC_V;
   pressureRead = PSI_TO_KPA*(vOut - 0.1*vSupply)*(pMax - pMin)/(0.8*vSupply) - 0*pressureBaseline;
+  // Serial.println("Pump");
   return pressureRead;
 }
 

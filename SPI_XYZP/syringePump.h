@@ -19,7 +19,16 @@ class SyringePump{
 
     int microDelay = 50;
 
+
+    // Actuator geometry to determine max steps
     int STEPS_PER_MM = 400;
+    float STROKE = 25.0; //Eq. triangle length in mm
+    float L0 = STROKE/(1.0 - 2.0/PI); // flat length for contraction = STROKE
+    float ACT_WIDTH = 30.0; // width of muscle in mm
+    float NUM_L = 3; // number of subdivisions in muscle
+    float A_SYRINGE = PI*pow(13.25, 2.0); // piston area in mm^2
+    float FACT_V = (ACT_WIDTH*pow(L0 , 2.0))/(2.0*NUM_L);
+    float MAX_V = FACT_V*(2.0/PI); // volume in mm^3 when fully actuated
     int maxSteps = 5000; //((MAX_V/A_SYRINGE)*STEPS_PER_MM); 
     int minSteps = 0;
 
@@ -66,11 +75,11 @@ public:
     byte firstByte = 0;
     byte lastByte = 255;
 
-  ////////////////////////////////////////////////////////////////////////////
-  // Functions
+    ////////////////////////////////////////////////////////////////////////////
+    // Functions
 
-  float readPressure();
-  float filterPressure(float pressIn);
-  void sendRecvFloat(int pinSS, dataFloat *outData, dataFloat *inData);
+    float readPressure();
+    float filterPressure(float pressIn);
+    void sendRecvFloat(int pinSS, dataFloat *outData, dataFloat *inData);
 
 };
